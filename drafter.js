@@ -1,71 +1,37 @@
-﻿$( document ).ready( function () {
-	
+﻿/** Civ5 'fruity' drafter created by HellBlazer, modified by tpelican
+ * @author HellBlazer
+ * @modifiedby tpelican
+ * @date 08.24.2022
+ */
+$( document ).ready( () => {
+	var civSelects = ".America, .Arabia, .Assyria, .Austria, .Aztec, .Babylon, .Brazil, .Byzantium, .Carthage, .Celts, .China, .Denmark, .Egypt, .England, .Ethiopia, .France, .Germany, .Greece, .Huns, .Inca, .India, .Indonesia, .Iroquois, .Japan, .Korea, .Maya, .Mongolia, .Morocco, .Netherlands, .Ottomans, .Persia, .Poland, .Polynesia, .Portugal, .Rome, .Russia, .Shoshone, .Siam, .Songhai, .Spain, .Sweden, .Venetian, .Zulu";
+	var civNames = [ "America", "Arabia", "Assyria", "Austria", "Aztec", "Babylon", "Brazil", "Byzantium", "Carthage", "Celts", "China", "Denmark", "Egypt", "England", "Ethiopia", "France", "Germany", "Greece", "Huns", "Inca", "India", "Indonesia", "Iroquois", "Japan", "Korea", "Maya", "Mongolia", "Morocco", "Netherlands", "Ottomans", "Persia", "Poland", "Polynesia", "Portugal", "Rome", "Russia", "Shoshone", "Siam", "Songhai", "Spain", "Sweden", "Venetian", "Zulu" ];
 	var allCivs = {};
-
-	allCivs[ "America" ] = true;
-	allCivs[ "Arabia" ] = true;
-	allCivs[ "Assyria" ] = true;
-	allCivs[ "Austria" ] = true;
-	allCivs[ "Aztec" ] = true;
-	allCivs[ "Babylon" ] = true;
-	allCivs[ "Brazil" ] = true;
-	allCivs[ "Byzantium" ] = true;
-	allCivs[ "Carthage" ] = true;
-	allCivs[ "Celts" ] = true;
-	allCivs[ "China" ] = true;
-	allCivs[ "Denmark" ] = true;
-	allCivs[ "Egypt" ] = true;
-	allCivs[ "England" ] = true;
-	allCivs[ "Ethiopia" ] = true;
-	allCivs[ "France" ] = true;
-	allCivs[ "Germany" ] = true;
-	allCivs[ "Greece" ] = true;
-	allCivs[ "Huns" ] = true;
-	allCivs[ "Inca" ] = true;
-	allCivs[ "India" ] = true;
-	allCivs[ "Indonesia" ] = true;
-	allCivs[ "Iroquois" ] = true;
-	allCivs[ "Japan" ] = true;
-	allCivs[ "Korea" ] = true;
-	allCivs[ "Maya" ] = true;
-	allCivs[ "Mongolia" ] = true;
-	allCivs[ "Morocco" ] = true;
-	allCivs[ "Netherlands" ] = true;
-	allCivs[ "Ottomans" ] = true;
-	allCivs[ "Persia" ] = true;
-	allCivs[ "Poland" ] = true;
-	allCivs[ "Polynesia" ] = true;
-	allCivs[ "Portugal" ] = true;
-	allCivs[ "Rome" ] = true;
-	allCivs[ "Russia" ] = true;
-	allCivs[ "Shoshone" ] = true;
-	allCivs[ "Siam" ] = true;
-	allCivs[ "Songhai" ] = true;
-	allCivs[ "Spain" ] = true;
-	allCivs[ "Sweden" ] = true;
-	allCivs[ "Venetian" ] = true;
-	allCivs[ "Zulu" ] = true;
-	var civsMap = new Map(  );
+	civNames.forEach( civ => allCivs[ civ ] = true )
 
 	var bannedCivs = 0;
-	var totalCivs = 43;
+	var totalCivs = civNames.length;
 	var titleHTML = "";
 	var allclicked = false;
 
 	// toggle disable or enabled civ
-	$( ".America, .Arabia, .Assyria, .Austria, .Aztec, .Babylon, .Brazil, .Byzantium, .Carthage, .Celts, .China, .Denmark, .Egypt, .England, .Ethiopia, .France, .Germany, .Greece, .Huns, .Inca, .India, .Indonesia, .Iroquois, .Japan, .Korea, .Maya, .Mongolia, .Morocco, .Netherlands, .Ottomans, .Persia, .Poland, .Polynesia, .Portugal, .Rome, .Russia, .Shoshone, .Siam, .Songhai, .Spain, .Sweden, .Venetian, .Zulu" ).bind( 'click', toggleState )
+	$( civSelects ).bind( 'click', toggleState )
 
+	/** Toggles the civ
+	 * @param {*} e the element
+	 */
 	function toggleState( e ) {        // function_tr
 		if ( !$( this ).is( ':animated' ) ) {
 			if ( $( this ).css( 'opacity' ) < 1 ) {
 				$( this ).css( "text-decoration", "none" );
 				$( this ).css( "background-color", "#282828" );
-				$( this ).fadeTo( "slow", 1, function () { } );
+				$( this ).fadeTo( "slow", 1, () => { } );
 				allCivs[ this.className ] = true;
 				bannedCivs--;
 			} else {
 				$( this ).css( "background-color", "#1a1a1a" );
-				$( this ).fadeTo( "slow", 0.25, function () { $( this ).css( "text-decoration", "line-through" ); } );
+				$( this ).fadeTo( "slow", 0.25, () =>
+					$( this ).css( "text-decoration", "line-through" ) );
 				allCivs[ this.className ] = false;
 				bannedCivs++;
 			}
@@ -74,41 +40,29 @@
 	};
 
 	//reset all to enabled
-	$( '#reset' ).click( function () {
+	$( '#reset' ).click( () => {
 		if ( $( '#slideThree' ).is( ':checked' ) ) {
-			$( ".America, .Arabia, .Assyria, .Austria, .Aztec, .Babylon, .Brazil, .Byzantium, .Carthage, .Celts, .China, .Denmark, .Egypt, .England, .Ethiopia, .France, .Germany, .Greece, .Huns, .Inca, .India, .Indonesia, .Iroquois, .Japan, .Korea, .Maya, .Mongolia, .Morocco, .Netherlands, .Ottomans, .Persia, .Poland, .Polynesia, .Portugal, .Rome, .Russia, .Shoshone, .Siam, .Songhai, .Spain, .Sweden, .Venetian, .Zulu" ).css(
-				{
-					"text-decoration": "none",
-					"background-color": "#282828"
-				} );
+			$( civSelects ).css( {
+				"text-decoration": "none",
+				"background-color": "#282828"
+			} );
+			$( civSelects ).fadeTo( "slow", 1, () => { } );
 
-			$( ".America, .Arabia, .Assyria, .Austria, .Aztec, .Babylon, .Brazil, .Byzantium, .Carthage, .Celts, .China, .Denmark, .Egypt, .England, .Ethiopia, .France, .Germany, .Greece, .Huns, .Inca, .India, .Indonesia, .Iroquois, .Japan, .Korea, .Maya, .Mongolia, .Morocco, .Netherlands, .Ottomans, .Persia, .Poland, .Polynesia, .Portugal, .Rome, .Russia, .Shoshone, .Siam, .Songhai, .Spain, .Sweden, .Venetian, .Zulu" ).fadeTo( "slow", 1, function () { } );
-
-			$.each( allCivs, function ( index, value ) {
-				if ( ( index == "Argentina" ) || ( index == "Armenia" ) || ( index == "Australia" ) || ( index == "Ayyubids" ) || ( index == "Belgium" ) || ( index == "Boers" ) || ( index == "Bolivia" ) || ( index == "Brunei" ) || ( index == "Bulgaria" ) || ( index == "Burma" ) || ( index == "Canada" ) || ( index == "Chile" ) || ( index == "Colombia" ) || ( index == "Cuba" ) || ( index == "Finland" ) || ( index == "Franks" ) || ( index == "Gaul" ) || ( index == "Golden" ) || ( index == "Goths" ) ||
-					( index == "Hittites" ) || ( index == "Hungary" ) || ( index == "Ireland" ) || ( index == "Israel" ) || ( index == "Italy" ) || ( index == "Jerusalem" ) || ( index == "Khmer" ) || ( index == "Kilwa" ) || ( index == "Kongo" ) || ( index == "Lithuania" ) || ( index == "Macedonian" ) || ( index == "Manchuria" ) || ( index == "Maori" ) || ( index == "Madagascar" ) || ( index == "Maurya" ) || ( index == "Mexican" ) || ( index == "Moors" ) || ( index == "Mysore" ) || ( index == "NewZealand" ) || ( index == "Nabatea" ) ||
-					( index == "Normandy" ) || ( index == "Norway" ) || ( index == "Nubia" ) || ( index == "Oman" ) || ( index == "Philippines" ) || ( index == "Phoenician" ) || ( index == "Prussian" ) || ( index == "Romania" ) || ( index == "Scotland" ) || ( index == "Sioux" ) || ( index == "Sumeria" ) || ( index == "Tibet" ) || ( index == "Timurids" ) || ( index == "Tonga" ) || ( index == "Turkey" ) || ( index == "Ukraine" ) || ( index == "UAE" ) || ( index == "Venetian" ) || ( index == "Vietnam" ) || ( index == "Vatican" ) || ( index == "Wales" ) || ( index == "Zimbabwe" ) ) {
-					allCivs[ index ] = false;
-				} else {
-					allCivs[ index ] = true;
-				}
+			$.each( allCivs, ( index, value ) => {
+				allCivs[ index ] = civSelects.contains( index ) ? false : true;
 			} );
 
 			//update the title
-			totalCivs = 42;
+			totalCivs = civNames.length;
 			bannedCivs = 0;
 			updateBanned( totalCivs, bannedCivs );
-
 		} else {
-			$( ".America, .Arabia, .Assyria, .Austria, .Aztec, .Babylon, .Brazil, .Byzantium, .Carthage, .Celts, .China, .Denmark, .Egypt, .England, .Ethiopia, .France, .Germany, .Greece, .Huns, .Inca, .India, .Indonesia, .Iroquois, .Japan, .Korea, .Maya, .Mongolia, .Morocco, .Netherlands, .Ottomans, .Persia, .Poland, .Polynesia, .Portugal, .Rome, .Russia, .Shoshone, .Siam, .Songhai, .Spain, .Sweden, .Venetian, .Zulu" ).css(
-				{
-					"text-decoration": "none",
-					"background-color": "#282828"
-				} );
-
-			$( ".America, .Arabia, .Assyria, .Austria, .Aztec, .Babylon, .Brazil, .Byzantium, .Carthage, .Celts, .China, .Denmark, .Egypt, .England, .Ethiopia, .France, .Germany, .Greece, .Huns, .Inca, .India, .Indonesia, .Iroquois, .Japan, .Korea, .Maya, .Mongolia, .Morocco, .Netherlands, .Ottomans, .Persia, .Poland, .Polynesia, .Portugal, .Rome, .Russia, .Shoshone, .Siam, .Songhai, .Spain, .Sweden, .Venetian, .Zulu" ).fadeTo( "slow", 1, function () { } );
-
-			$.each( allCivs, function ( index, value ) {
+			$( civSelects ).css( {
+				"text-decoration": "none",
+				"background-color": "#282828"
+			} );
+			$( civSelects ).fadeTo( "slow", 1, () => { } );
+			$.each( allCivs, ( index, value ) => {
 				allCivs[ index ] = true;
 			} );
 
@@ -116,34 +70,36 @@
 			bannedCivs = 0;
 			updateBanned( totalCivs, bannedCivs );
 		}
-
 		allclicked = false;
 		$( '#create' ).attr( "disabled", false );
 	} );
 
 	//set all to disabled
-	$( '#all' ).click( function () {
-		$( ".America, .Arabia, .Assyria, .Austria, .Aztec, .Babylon, .Brazil, .Byzantium, .Carthage, .Celts, .China, .Denmark, .Egypt, .England, .Ethiopia, .France, .Germany, .Greece, .Huns, .Inca, .India, .Indonesia, .Iroquois, .Japan, .Korea, .Maya, .Mongolia, .Morocco, .Netherlands, .Ottomans, .Persia, .Poland, .Polynesia, .Portugal, .Rome, .Russia, .Shoshone, .Siam, .Songhai, .Spain, .Sweden, .Venetian, .Zulu" ).fadeTo( "slow", 0.25, function () { $( this ).css( { "text-decoration": "line-through", "background-color": "#1a1a1a" } ); } );;
-
-		$.each( allCivs, function ( index, value ) {
+	$( '#all' ).click( () => {
+		$( civSelects ).fadeTo( "slow", 0.25, () =>
+			$( this ).css( { "text-decoration": "line-through", "background-color": "#1a1a1a" } ) );
+		$.each( allCivs, ( index, value ) => {
 			allCivs[ index ] = false;
 		} );
 
 		//update the title
-		totalCivs = 43;
+		totalCivs = civNames.length;
 		bannedCivs = totalCivs;
 		updateBanned( totalCivs, bannedCivs );
-
 		allclicked = true;
 	} );
 
+	/** Updates the number of banned civs
+	 * @param {*} totalAllowed - the total amount of allowed civs
+	 * @param {*} totalBanned - the total amount of banned civs
+	 */
 	function updateBanned( totalAllowed, totalBanned ) {
 		var titleHTML = ( totalAllowed - totalBanned ) + " Allowed - " + totalBanned + " Banned";
 		$( ".selectorheadline" ).html( titleHTML );
 	}
 
 	// make the draft
-	$( '#create' ).click( function () {
+	$( '#create' ).click( () => {
 		$( '#create' ).attr( "disabled", true );
 		var players = $( "#gameplayers option:selected" ).index() + 1;
 		var rndpicks = $( "#picks option:selected" ).index() + 1;
@@ -151,13 +107,12 @@
 		var enabledCivs = 0;
 		var missingCivs = 0;
 		var allowedCivs = [];
-		var playerPicks = {};
 
 		//clear any previous results
 		$( "#results" ).empty();
 
 		//check how many civs are enabled
-		$.each( allCivs, function ( index, value ) {
+		$.each( allCivs, ( index, value ) => {
 			if ( allCivs[ index ] == true ) {
 				allowedCivs[ enabledCivs ] = index;
 				enabledCivs++;
@@ -165,7 +120,7 @@
 		} );
 
 		//check if the user is trying to pick more civs than avaliable
-		if ( neededCivs > 43 ) {
+		if ( neededCivs > civNames.length ) {
 			$( "#results" ).html( "<p class='drawerror'>There are not enough civilizations for " + players + " players to have " + rndpicks + " picks each!</br>Select a different number of players or lower the number of random picks and try again!</p>" );
 
 			// check if we have enough enabled civs process the draft
@@ -178,25 +133,25 @@
 			// pick 3 rand civs for each player
 			var i;
 			var k;
-			var picksHTML = "<p class='rescopied'>Draft results have been copied to clipboard</p>";
+			var picksHTML = "<p class='rescopied'>Draft results have been copied to clipboard</p><table class='drawresults'>";
 			var resCopy = ""
-
-			picksHTML = picksHTML + "<table class='drawresults'>";
 
 			$( "#results" ).css( "text-align", "left" );
 			//loop thru each player
 			for ( i = 1; i <= players; i++ ) {
-
 				//add this player to the results HTML
-				picksHTML = picksHTML + "<tr><td>Player " + i + " choose from:</td>";
+				picksHTML = picksHTML + "<tr><td>Player " + i
+					+ " choose from:</td>";
 				resCopy = resCopy + "Player " + i + " choose from: - ";
 
 				//loop however many picks are needed
 				for ( k = 1; k <= rndpicks; k++ ) {
-
 					//loop thru the avlaiable civs and pick 3 at random
-					var thisciv = Math.floor( Math.random() * allowedCivs.length );
-					picksHTML = picksHTML + "<td><img src='img/" + allowedCivs[ thisciv ].toLowerCase() + ".png'></img>" + allowedCivs[ thisciv ];
+					var thisciv = Math.floor(
+						Math.random() * allowedCivs.length );
+					picksHTML = picksHTML + "<td><img src='img/"
+						+ allowedCivs[ thisciv ].toLowerCase()
+						+ ".png'></img>" + allowedCivs[ thisciv ];
 
 					if ( k < rndpicks ) {
 						picksHTML = picksHTML + "<td>";
@@ -210,31 +165,31 @@
 					enabledCivs = 0;
 					var tmpCivs = [];
 
-					$.each( allowedCivs, function ( index, value ) {
+					$.each( allowedCivs, ( index, value ) => {
 						if ( index != thisciv ) {
 							tmpCivs[ enabledCivs ] = value;
 							enabledCivs++;
 						};
 					} );
-
 					allowedCivs = tmpCivs.slice();
 				}
-
 				picksHTML = picksHTML + "</br>"
 			}
-
 			picksHTML = picksHTML + "</table>"
 			picksHTML = picksHTML + "<div id='copyresults'><input class='submitbutton' name='copyres' id='copyres' type='button' value='Copy Results' /></div>"
+
 			$( "#results" ).html( picksHTML );
-
 			$( "#copyTarget" ).val( resCopy );
-
-			document.getElementById( "copyres" ).addEventListener( "click", function () {
-				copyToClipboard( document.getElementById( "copyTarget" ) );
-			} );
-
+			document.getElementById( "copyres" )
+				.addEventListener( "click", () =>
+					copyToClipboard( document.getElementById(
+						"copyTarget" ) ) );
 			$( "#copyres" ).click();
 
+			/** Copies the output to your clipboard
+			 * @param {*} elem - the element to copy
+			 * @returns true if successful
+			 */
 			function copyToClipboard( elem ) {
 				// create hidden text element, if it doesn't already exist
 				var targetId = "_hiddenCopyText_";
